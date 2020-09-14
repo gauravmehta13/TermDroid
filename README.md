@@ -5,7 +5,6 @@ Run terminal commands on Android</b></br>
   <sub>TermDroid is an Android terminal emulator and Linux environment app that works directly with no rooting or setup required.<sub>
 </p>
   
-  <p align="center">
-  
-  ### The App is still in Alpha phase and only "cal" command works as of now.
-</p>
+
+<h3 align="center"> The App is still in Alpha phase and only "cal" command works as of now.</h3>
+
