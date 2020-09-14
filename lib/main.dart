@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'TermDroid',
       theme: ThemeData(),
       home: Dashboard(),
     );
@@ -32,6 +33,7 @@ class _DashboardState extends State<Dashboard> {
   var ipaddr;
   _DashboardState(this.ipaddr);
   var op = " ";
+  var error = "";
   var msgLine = " ";
   String commandName = " ";
   @override
@@ -40,7 +42,7 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text('RemoteManagementApp'),
+        title: Text('Termdroid'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -50,7 +52,7 @@ class _DashboardState extends State<Dashboard> {
               height: MediaQuery.of(context).size.height / 5,
             ),
             Text(
-              'Execute commands on server',
+              'Execute commands on Android',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -77,16 +79,17 @@ class _DashboardState extends State<Dashboard> {
             RaisedButton(
               child: Text('Execute'),
               onPressed: () async {
-                await Process.run('cal', ['1']).then((ProcessResult pr) {
+                await Process.run(commandName, ['1']).then((ProcessResult pr) {
                   print(pr.exitCode);
                   op = pr.stdout;
+                  error = pr.stderr;
                   print(pr.stdout);
                   print(pr.stderr);
                 });
                 setState(() {
-                  commandName = op;
+                  op = op;
+                  error = error;
                 });
-                print(op);
               },
             ),
             SizedBox(
@@ -96,23 +99,10 @@ class _DashboardState extends State<Dashboard> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    '',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
+                    '$error',
                   ),
                   Text(
-                    '${commandName ?? "output will show up here"}',
-                    style: TextStyle(
-                      //decoration: BoxDecoration().borderRadius,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    '${op ?? "output will show up here"}',
                   )
                 ],
               ),
